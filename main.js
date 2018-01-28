@@ -82,11 +82,19 @@ document.getElementById('pharah').addEventListener('click', () => {
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   var source = audioContext.createBufferSource();
   audioContext.decodeAudioData(base64ToArrayBuffer(base64), function(buffer) {
-     source.buffer = buffer;
-     source.connect(audioContext.destination);
-     source.start(0);
+    source.buffer = buffer;
+    source.connect(audioContext.destination);
+    source.start(0);
+    source.onended = function() {
+      console.log('ended', source)
+      audioContext.close()
+    }
   });
+  audioContext.onended = function() {
+    console.log('ended', audioContext.state)
+    // audioContext.close()
 
+  }
 
   // // document.getElementById('debug').innerText = 'clickign';
   // document.getElementById('yoaudio').src = cache[url];

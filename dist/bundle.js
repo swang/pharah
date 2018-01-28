@@ -1146,6 +1146,11 @@ var possibleConstructorReturn = function (self, call) {
 var cache = {};
 var imgCache = {};
 var githubUrl = window.location.href;
+
+if (githubUrl.endsWith("/index.html")) {
+  githubUrl = githubUrl.slice(0, -10);
+}
+
 var url = 'Pharah_-_Impressed.mp3';
 
 var ll = function ll() {
@@ -1236,7 +1241,15 @@ document.getElementById('pharah').addEventListener('click', function () {
     source.buffer = buffer;
     source.connect(audioContext.destination);
     source.start(0);
+    source.onended = function () {
+      console.log('ended', source);
+      audioContext.close();
+    };
   });
+  audioContext.onended = function () {
+    console.log('ended', audioContext.state);
+    // audioContext.close()
+  };
 
   // // document.getElementById('debug').innerText = 'clickign';
   // document.getElementById('yoaudio').src = cache[url];
