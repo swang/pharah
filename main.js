@@ -15,7 +15,7 @@ const ll = () => {
     document.getElementById('source').src = cache[url];
     document.getElementById('yoaudio').load();
   } else {
-    f.fetchAsData(githubUrl + url, {mode:'no-cors'}).then((base64) => {
+    f.fetch(githubUrl + url, {mode:'no-cors'}).then((base64) => {
       document.getElementById('source').src = base64;
       cache[url] = base64;
       document.getElementById('yoaudio').load();
