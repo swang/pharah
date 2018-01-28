@@ -1175,7 +1175,6 @@ var PharahApp = function (_Component) {
   createClass(PharahApp, [{
     key: 'render',
     value: function render$$1(props, state) {
-      console.log(props, state);
       return h(
         'div',
         { id: 'foo' },
@@ -1213,24 +1212,6 @@ var PharahApp = function (_Component) {
   }]);
   return PharahApp;
 }(Component);
-
-// render((
-
-//   <div id="foo">
-//     <span>Hello, world!</span>
-//     <button id="mainclick">Click Me</button>
-//     <button id="alt">alt play</button>
-//     <br />
-//     <audio id="yoaudio" controls>
-//       <source id="source" src="" type="audio/mpeg"></source>
-//     </audio><br />
-//     <audio id="yoaudio2" controls>
-//       <source id="source" src="{githubUrl + url}" type="audio/mpeg"></source>
-//     </audio><br />
-//     <div id="debug">
-//     </div>
-//   </div>
-// ), document.body);
 
 render(h(PharahApp, { githubUrl: githubUrl, url: url }), document.body);
 
