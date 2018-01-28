@@ -1076,6 +1076,72 @@ var fetchBase64 = createCommonjsModule(function (module, exports) {
 
 var FetchBase64 = unwrapExports(fetchBase64);
 
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
 console.log(FetchBase64);
 
 var githubUrl = 'https://swang.github.io/pharah/';
@@ -1090,46 +1156,89 @@ f.fetchAsData(githubUrl + url, { mode: 'no-cors' }).then(function (base64) {
   console.error(err);
 });
 
-render(h(
-  'div',
-  { id: 'foo' },
-  h(
-    'span',
-    null,
-    'Hello, world!'
-  ),
-  h(
-    'button',
-    { id: 'mainclick' },
-    'Click Me'
-  ),
-  h(
-    'button',
-    { id: 'alt' },
-    'alt play'
-  ),
-  h('br', null),
-  h(
-    'audio',
-    { id: 'yoaudio', controls: true },
-    h('source', { id: 'source', src: '', type: 'audio/mp3' })
-  ),
-  h('br', null),
-  h(
-    'audio',
-    { id: 'yoaudio2', controls: true },
-    h('source', { id: 'source', src: '{githubUrl + url}', type: 'audio/mpeg' })
-  ),
-  h('br', null),
-  h('div', { id: 'debug' })
-), document.body);
+var PharahApp = function (_Component) {
+  inherits(PharahApp, _Component);
+
+  function PharahApp() {
+    classCallCheck(this, PharahApp);
+
+    // set initial time:
+    var _this = possibleConstructorReturn(this, (PharahApp.__proto__ || Object.getPrototypeOf(PharahApp)).call(this));
+
+    _this.props = {
+      githubUrl: githubUrl,
+      url: url
+    };
+    return _this;
+  }
+
+  createClass(PharahApp, [{
+    key: 'render',
+    value: function render$$1(props, state) {
+      return h(
+        'div',
+        { id: 'foo' },
+        h(
+          'span',
+          null,
+          'Hello, world!'
+        ),
+        h(
+          'button',
+          { id: 'mainclick' },
+          'Click Me'
+        ),
+        h(
+          'button',
+          { id: 'alt' },
+          'alt play'
+        ),
+        h('br', null),
+        h(
+          'audio',
+          { id: 'yoaudio', controls: true },
+          h('source', { id: 'source', src: '', type: 'audio/mpeg' })
+        ),
+        h('br', null),
+        h(
+          'audio',
+          { id: 'yoaudio2', controls: true },
+          h('source', { id: 'source', src: '{props.githubUrl + props.url}', type: 'audio/mpeg' })
+        ),
+        h('br', null),
+        h('div', { id: 'debug' })
+      );
+    }
+  }]);
+  return PharahApp;
+}(Component);
+
+// render((
+
+//   <div id="foo">
+//     <span>Hello, world!</span>
+//     <button id="mainclick">Click Me</button>
+//     <button id="alt">alt play</button>
+//     <br />
+//     <audio id="yoaudio" controls>
+//       <source id="source" src="" type="audio/mpeg"></source>
+//     </audio><br />
+//     <audio id="yoaudio2" controls>
+//       <source id="source" src="{githubUrl + url}" type="audio/mpeg"></source>
+//     </audio><br />
+//     <div id="debug">
+//     </div>
+//   </div>
+// ), document.body);
+
+render(h(PharahApp, null), document.body);
 
 document.getElementById('mainclick').addEventListener('click', function () {
   // document.getElementById('debug').innerText = 'clickign';
   document.getElementById('yoaudio').play().then(function () {
     document.getElementById('debug').innerText = 'yoaudio_play';
   }).catch(function (err) {
-    document.getElementById('debug').innerText = JSON.stringiy(err);
+    document.getElementById('debug').innerText = JSON.stringify(err);
   });
 });
 
@@ -1137,7 +1246,7 @@ document.getElementById('alt').addEventListener('click', function () {
   document.getElementById('yoaudio2').play().then(function () {
     document.getElementById('debug').innerText = 'yoaudio2play';
   }).catch(function (err) {
-    document.getElementById('debug').innerText = JSON.stringiy(err);
+    document.getElementById('debug').innerText = JSON.stringify(err);
   });
 });
 
