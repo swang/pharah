@@ -69,6 +69,7 @@ render(<PharahApp githubUrl={githubUrl} url={url} />, document.body)
 
 document.getElementById('mainclick').addEventListener('click', () => {
   // document.getElementById('debug').innerText = 'clickign';
+  document.getElementById('yoaudio').load()
   document.getElementById('yoaudio').play().then(() => {
     document.getElementById('debug').innerText = 'yoaudio_play';
   }).catch((err) => {
@@ -79,6 +80,7 @@ document.getElementById('mainclick').addEventListener('click', () => {
 
 
 document.getElementById('alt').addEventListener('click', () => {
+  document.getElementById('yoaudio2').load()
   document.getElementById('yoaudio2').play().then(() => {
     document.getElementById('debug').innerText = 'yoaudio2play';
   }).catch((err) => {
