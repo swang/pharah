@@ -1022,8 +1022,9 @@ var fetchBase64 = createCommonjsModule(function (module, exports) {
     }
     async fetch(url = '', opts) {
       let _url = this.url || url;
+      let base64data;
       try {
-        let base64data = await this._fetch(url, opts);
+        base64data = await this._fetch(url, opts);
       } catch (e) {
         throw new Error(e);
       }
