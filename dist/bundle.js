@@ -1144,38 +1144,43 @@ var possibleConstructorReturn = function (self, call) {
 };
 
 var cache = {};
-var githubUrl = 'https://swang.github.io/pharah/';
+var imgCache = {};
+// let githubUrl = 'https://swang.github.io/pharah/'
+var githubUrl = 'http://localhost:8080/';
 var url = 'Pharah_-_Impressed.mp3';
 
 var ll = function ll() {
+
   var f = new FetchBase64();
   // let url = 'Pharah_-_Justice_rains_from_above!.ogg';
   if (cache[url]) {
-    alert('already fetched and cached audio ' + url);
-    document.getElementById('source').src = cache[url];
-    document.getElementById('yoaudio').load();
+    // alert('already fetched and cached audio ' + url)
+    // document.getElementById('source').src = cache[url];
+    // document.getElementById('yoaudio').load();
   } else {
     f.fetch(githubUrl + url, { mode: 'no-cors' }).then(function (base64) {
-      document.getElementById('source').src = base64;
+      // document.getElementById('source').src = base64;
       cache[url] = base64;
-      document.getElementById('yoaudio').load();
-      alert('fetched and cached audio ' + url);
+      // document.getElementById('yoaudio').load();
+      // alert('fetched and cached audio ' + url)
     }).catch(function (err) {
       document.getElementById('debug').innerText = JSON.stringify(err);
       console.error(err);
     });
   }
+
+  if (imgCache['pharah_icon.jpg']) {
+    document.getElementById('pharah_icon').src = imgCache['pharah_icon.jpg'];
+  } else {
+    f.fetchAsData(githubUrl + 'pharah_icon.jpg').then(function (dataUri) {
+      document.getElementById('pharah_icon').src = dataUri;
+      imgCache['pharah_icon.jpg'] = dataUri;
+    }).catch(function (err) {
+      console.log('Unable to load Pharah Icon', err);
+    });
+  }
 };
 ll();
-// let f = new FetchBase64()
-// f.fetchAsData(githubUrl + url, {mode:'no-cors'}).then((base64) => {
-//   document.getElementById('source').src = base64;
-//   cache[url] = base64;
-//   document.getElementById('yoaudio').load();
-// }).catch((err) => {
-//   document.getElementById('debug').innerText = JSON.stringify(err);
-//   console.error(err);
-// })
 
 var PharahApp = function (_Component) {
   inherits(PharahApp, _Component);
@@ -1200,33 +1205,10 @@ var PharahApp = function (_Component) {
         'div',
         { id: 'foo' },
         h(
-          'span',
-          null,
-          'Hello, world!'
-        ),
-        h(
           'button',
-          { id: 'mainclick' },
-          'Click Me'
+          { id: 'pharah' },
+          h('img', { id: 'pharah_icon', src: '' })
         ),
-        h(
-          'button',
-          { id: 'alt' },
-          'alt play'
-        ),
-        h('br', null),
-        h(
-          'audio',
-          { id: 'yoaudio', controls: true },
-          h('source', { id: 'source', src: '', type: 'audio/mpeg' })
-        ),
-        h('br', null),
-        h(
-          'audio',
-          { id: 'yoaudio2', controls: true },
-          h('source', { id: 'source2', src: props.githubUrl + props.url, type: 'audio/mpeg' })
-        ),
-        h('br', null),
         h('div', { id: 'debug' })
       );
     }
@@ -1236,7 +1218,7 @@ var PharahApp = function (_Component) {
 
 render(h(PharahApp, { githubUrl: githubUrl, url: url }), document.body);
 
-document.getElementById('mainclick').addEventListener('click', function () {
+document.getElementById('pharah').addEventListener('click', function () {
 
   function base64ToArrayBuffer(base64) {
     var binaryString = window.atob(base64);
@@ -1267,14 +1249,14 @@ document.getElementById('mainclick').addEventListener('click', function () {
   // })
 });
 
-document.getElementById('alt').addEventListener('click', function () {
-  document.getElementById('yoaudio').src = cache[url];
-  document.getElementById('yoaudio2').load();
-  document.getElementById('yoaudio2').play().then(function () {
-    document.getElementById('debug').innerText = 'yoaudio2play';
-  }).catch(function (err) {
-    document.getElementById('debug').innerText = JSON.stringify(err);
-  });
-});
+// document.getElementById('alt').addEventListener('click', () => {
+//   document.getElementById('yoaudio').src = cache[url];
+//   document.getElementById('yoaudio2').load()
+//   document.getElementById('yoaudio2').play().then(() => {
+//     document.getElementById('debug').innerText = 'yoaudio2play';
+//   }).catch((err) => {
+//     document.getElementById('debug').innerText = JSON.stringify(err);
+//   })
+// })
 
 }());
