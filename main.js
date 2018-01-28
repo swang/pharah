@@ -57,7 +57,7 @@ class PharahApp extends Component {
         <source id="source" src="" type="audio/mpeg"></source>
       </audio><br />
       <audio id="yoaudio2" controls>
-        <source id="source" src={props.githubUrl + props.url} type="audio/mpeg"></source>
+        <source id="source2" src={props.githubUrl + props.url} type="audio/mpeg"></source>
       </audio><br />
       <div id="debug">
       </div>

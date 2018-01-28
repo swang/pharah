@@ -1223,7 +1223,7 @@ var PharahApp = function (_Component) {
         h(
           'audio',
           { id: 'yoaudio2', controls: true },
-          h('source', { id: 'source', src: props.githubUrl + props.url, type: 'audio/mpeg' })
+          h('source', { id: 'source2', src: props.githubUrl + props.url, type: 'audio/mpeg' })
         ),
         h('br', null),
         h('div', { id: 'debug' })
