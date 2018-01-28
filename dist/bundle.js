@@ -1159,11 +1159,11 @@ f.fetchAsData(githubUrl + url, { mode: 'no-cors' }).then(function (base64) {
 var PharahApp = function (_Component) {
   inherits(PharahApp, _Component);
 
-  function PharahApp() {
+  function PharahApp(props) {
     classCallCheck(this, PharahApp);
 
     // set initial time:
-    var _this = possibleConstructorReturn(this, (PharahApp.__proto__ || Object.getPrototypeOf(PharahApp)).call(this));
+    var _this = possibleConstructorReturn(this, (PharahApp.__proto__ || Object.getPrototypeOf(PharahApp)).call(this, props));
 
     _this.props = {
       githubUrl: githubUrl,
@@ -1175,6 +1175,7 @@ var PharahApp = function (_Component) {
   createClass(PharahApp, [{
     key: 'render',
     value: function render$$1(props, state) {
+      console.log(props, state);
       return h(
         'div',
         { id: 'foo' },
@@ -1203,7 +1204,7 @@ var PharahApp = function (_Component) {
         h(
           'audio',
           { id: 'yoaudio2', controls: true },
-          h('source', { id: 'source', src: '{props.githubUrl + props.url}', type: 'audio/mpeg' })
+          h('source', { id: 'source', src: props.githubUrl + props.url, type: 'audio/mpeg' })
         ),
         h('br', null),
         h('div', { id: 'debug' })
@@ -1231,7 +1232,7 @@ var PharahApp = function (_Component) {
 //   </div>
 // ), document.body);
 
-render(h(PharahApp, null), document.body);
+render(h(PharahApp, { githubUrl: githubUrl, url: url }), document.body);
 
 document.getElementById('mainclick').addEventListener('click', function () {
   // document.getElementById('debug').innerText = 'clickign';
