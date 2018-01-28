@@ -11,7 +11,7 @@ const ll = () => {
   let f = new FetchBase64()
   // let url = 'Pharah_-_Justice_rains_from_above!.ogg';
   if (cache[url]) {
-    console.log('already fetched and cached audio', url)
+    alert('already fetched and cached audio', url)
     document.getElementById('source').src = cache[url];
     document.getElementById('yoaudio').load();
   } else {
@@ -19,7 +19,7 @@ const ll = () => {
       document.getElementById('source').src = base64;
       cache[url] = base64;
       document.getElementById('yoaudio').load();
-      console.log('fetched and cached audio', url)
+      alert('fetched and cached audio', url)
     }).catch((err) => {
       document.getElementById('debug').innerText = JSON.stringify(err);
       console.error(err);
