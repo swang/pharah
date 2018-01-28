@@ -1145,8 +1145,7 @@ var possibleConstructorReturn = function (self, call) {
 
 var cache = {};
 var imgCache = {};
-// let githubUrl = 'https://swang.github.io/pharah/'
-var githubUrl = 'http://localhost:8080/';
+var githubUrl = window.location.href;
 var url = 'Pharah_-_Impressed.mp3';
 
 var ll = function ll() {

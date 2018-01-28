@@ -5,9 +5,8 @@ import FetchBase64 from 'fetch-base64-in-browser'
 
 let cache = {}
 let imgCache = {}
-// let githubUrl = 'https://swang.github.io/pharah/'
-let githubUrl = 'http://localhost:8080/'
-let url = 'Pharah_-_Impressed.mp3';
+let githubUrl = window.location.href
+let url = 'Pharah_-_Impressed.mp3'
 
 const ll = () => {
 
