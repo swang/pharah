@@ -1142,19 +1142,39 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-console.log(FetchBase64);
-
+var cache = {};
 var githubUrl = 'https://swang.github.io/pharah/';
 var url = 'Pharah_-_Impressed.mp3';
 
-var f = new FetchBase64();
-f.fetchAsData(githubUrl + url, { mode: 'no-cors' }).then(function (base64) {
-  document.getElementById('source').src = base64;
-  document.getElementById('yoaudio').load();
-}).catch(function (err) {
-  document.getElementById('debug').innerText = JSON.stringify(err);
-  console.error(err);
-});
+var ll = function ll() {
+  var f = new FetchBase64();
+  // let url = 'Pharah_-_Justice_rains_from_above!.ogg';
+  if (cache[url]) {
+    console.log('already fetched and cached audio', url);
+    document.getElementById('source').src = cache[url];
+    document.getElementById('yoaudio').load();
+  } else {
+    f.fetchAsData(githubUrl + url, { mode: 'no-cors' }).then(function (base64) {
+      document.getElementById('source').src = base64;
+      cache[url] = base64;
+      document.getElementById('yoaudio').load();
+      console.log('fetched and cached audio', url);
+    }).catch(function (err) {
+      document.getElementById('debug').innerText = JSON.stringify(err);
+      console.error(err);
+    });
+  }
+};
+ll();
+// let f = new FetchBase64()
+// f.fetchAsData(githubUrl + url, {mode:'no-cors'}).then((base64) => {
+//   document.getElementById('source').src = base64;
+//   cache[url] = base64;
+//   document.getElementById('yoaudio').load();
+// }).catch((err) => {
+//   document.getElementById('debug').innerText = JSON.stringify(err);
+//   console.error(err);
+// })
 
 var PharahApp = function (_Component) {
   inherits(PharahApp, _Component);

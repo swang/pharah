@@ -2,11 +2,8 @@
 
 import { h, render, Component } from 'preact'
 import FetchBase64 from 'fetch-base64-in-browser'
-console.log(FetchBase64)
 
-let cache = {
-
-}
+let cache = {}
 let githubUrl = 'https://swang.github.io/pharah/'
 let url = 'Pharah_-_Impressed.mp3';
 
@@ -30,16 +27,16 @@ const ll = () => {
 
   }
 }
-
-let f = new FetchBase64()
-f.fetchAsData(githubUrl + url, {mode:'no-cors'}).then((base64) => {
-  document.getElementById('source').src = base64;
-  cache[url] = base64;
-  document.getElementById('yoaudio').load();
-}).catch((err) => {
-  document.getElementById('debug').innerText = JSON.stringify(err);
-  console.error(err);
-})
+ll()
+// let f = new FetchBase64()
+// f.fetchAsData(githubUrl + url, {mode:'no-cors'}).then((base64) => {
+//   document.getElementById('source').src = base64;
+//   cache[url] = base64;
+//   document.getElementById('yoaudio').load();
+// }).catch((err) => {
+//   document.getElementById('debug').innerText = JSON.stringify(err);
+//   console.error(err);
+// })
 
 class PharahApp extends Component {
   constructor(props) {
