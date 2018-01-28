@@ -1078,10 +1078,11 @@ var FetchBase64 = unwrapExports(fetchBase64);
 
 console.log(FetchBase64);
 
+var githubUrl = 'https://swang.github.io/pharah/';
 var url = 'Pharah_-_Impressed.mp3';
 
 var f = new FetchBase64();
-f.fetchAsData('http://192.168.42.72:8080/' + url, { mode: 'no-cors' }).then(function (base64) {
+f.fetchAsData(githubUrl + url, { mode: 'no-cors' }).then(function (base64) {
   document.getElementById('source').src = base64;
   document.getElementById('yoaudio').load();
 }).catch(function (err) {
@@ -1117,7 +1118,7 @@ render(h(
   h(
     'audio',
     { id: 'yoaudio2', controls: true },
-    h('source', { id: 'source', src: 'http://192.168.42.72:8080/Pharah_-_Impressed.mp3', type: 'audio/mpeg' })
+    h('source', { id: 'source', src: '{githubUrl + url}', type: 'audio/mpeg' })
   ),
   h('br', null),
   h('div', { id: 'debug' })
