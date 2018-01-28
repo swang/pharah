@@ -1236,14 +1236,34 @@ var PharahApp = function (_Component) {
 render(h(PharahApp, { githubUrl: githubUrl, url: url }), document.body);
 
 document.getElementById('mainclick').addEventListener('click', function () {
-  // document.getElementById('debug').innerText = 'clickign';
-  document.getElementById('yoaudio').src = cache[url];
-  document.getElementById('yoaudio').load();
-  document.getElementById('yoaudio').play().then(function () {
-    document.getElementById('debug').innerText = 'yoaudio_play';
-  }).catch(function (err) {
-    document.getElementById('debug').innerText = JSON.stringify(err);
+
+  function base64ToArrayBuffer(base64) {
+    var binaryString = window.atob(base64);
+    var len = binaryString.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+  }
+
+  var base64 = cache[url];
+  var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  var source = audioContext.createBufferSource();
+  audioContext.decodeAudioData(base64ToArrayBuffer(base64), function (buffer) {
+    source.buffer = buffer;
+    source.connect(audioContext.destination);
+    source.start(0);
   });
+
+  // // document.getElementById('debug').innerText = 'clickign';
+  // document.getElementById('yoaudio').src = cache[url];
+  // document.getElementById('yoaudio').load()
+  // document.getElementById('yoaudio').play().then(() => {
+  //   document.getElementById('debug').innerText = 'yoaudio_play';
+  // }).catch((err) => {
+  //   document.getElementById('debug').innerText = JSON.stringify(err);
+  // })
 });
 
 document.getElementById('alt').addEventListener('click', function () {
