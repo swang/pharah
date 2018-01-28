@@ -6,6 +6,11 @@ import FetchBase64 from 'fetch-base64-in-browser'
 let cache = {}
 let imgCache = {}
 let githubUrl = window.location.href
+
+if (githubUrl.endsWith("/index.html")) {
+  githubUrl = githubUrl.slice(0, -10)
+}
+
 let url = 'Pharah_-_Impressed.mp3'
 
 const ll = () => {
