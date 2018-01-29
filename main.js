@@ -44,7 +44,7 @@ const cacheAudio = (url) => {
 const cacheMedia = (url) => {
 
   // let icon = 'pharah_front_icon.jpg'
-  let icon = 'favicon.ico'
+  let icon = './favicon.ico'
   if (imgCache[icon]) {
     de('pharah_icon').src = imgCache[icon]
   } else {

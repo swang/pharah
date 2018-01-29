@@ -1173,7 +1173,7 @@ var cacheAudio = function cacheAudio(url) {
 var cacheMedia = function cacheMedia(url) {
 
   // let icon = 'pharah_front_icon.jpg'
-  var icon = 'favicon.ico';
+  var icon = './favicon.ico';
   if (imgCache[icon]) {
     de('pharah_icon').src = imgCache[icon];
   } else {
