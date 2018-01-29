@@ -8,45 +8,60 @@ let imgCache = {}
 let g = window.location.href
 let githubUrl = g.endsWith('/index.html') ? g.slice(0, -10) : g
 
+let mp3s = [
+  'Pharah_-_Defend_The_Point,_Strike_As_One.mp3',
+  'Pharah_-_I\'m_Impressed.mp3',
+  'Pharah_-_I\'m_Taking_The_Objective,_Converge_On_Me.mp3',
+  'Pharah_-_I_Always_Get_My_Prey.mp3',
+  'Pharah_-_Impressed.mp3',
+  'Pharah_-_Let\'s_Keep_The_Payload_Moving.mp3',
+  'Pharah_-_My_Ultimate_Is_Ready.mp3',
+  'Pharah_-_Remember_Your_Training,_And_We\'ll_Get_Through_This_Just_Fine.mp3',
+  'Pharah_-_Tango,_Down.mp3'
+]
 let url = 'Pharah_-_Impressed.mp3'
+let de = document.getElementById.bind(document)
+let f = new FetchBase64()
 
-const ll = () => {
+const cacheAudio = (url) => {
+  return new Promise((resolve, reject) => {
+    if (cache[url]) {
+      resolve(cache[url])
+    } else {
+      f.fetch(githubUrl + 'mp3/' + url, {mode:'no-cors'}).then((base64) => {
+        cache[url] = base64;
+        resolve(base64)
+      }).catch((err) => {
+        de('debug').innerText = JSON.stringify(err);
+        console.error(err);
+        reject(err)
+      })
+    }
+  })
+}
 
-  let f = new FetchBase64()
-  // let url = 'Pharah_-_Justice_rains_from_above!.ogg';
-  if (cache[url]) {
-    // alert('already fetched and cached audio ' + url)
-    // document.getElementById('source').src = cache[url];
-    // document.getElementById('yoaudio').load();
+
+const cacheMedia = (url) => {
+
+  // let icon = 'pharah_front_icon.jpg'
+  let icon = 'favicon.ico'
+  if (imgCache[icon]) {
+    de('pharah_icon').src = imgCache[icon]
   } else {
-    f.fetch(githubUrl + url, {mode:'no-cors'}).then((base64) => {
-      // document.getElementById('source').src = base64;
-      cache[url] = base64;
-      // document.getElementById('yoaudio').load();
-      // alert('fetched and cached audio ' + url)
-    }).catch((err) => {
-      document.getElementById('debug').innerText = JSON.stringify(err);
-      console.error(err);
-    })
-  }
-
-  if (imgCache['pharah_icon.jpg']) {
-    document.getElementById('pharah_icon').src = imgCache['pharah_icon.jpg']
-  } else {
-    f.fetchAsData(githubUrl + 'pharah_icon.jpg').then((dataUri) => {
-      document.getElementById('pharah_icon').src = dataUri
-      imgCache['pharah_icon.jpg'] = dataUri
+    f.fetchAsData(githubUrl + icon).then((dataUri) => {
+      de('pharah_icon').src = dataUri
+      imgCache[icon] = dataUri
     }).catch((err) => {
       console.log('Unable to load Pharah Icon', err)
     })
   }
 }
-ll()
+
+cacheMedia(url)
 
 class PharahApp extends Component {
   constructor(props) {
     super(props)
-    // set initial time:
     this.props = {
       githubUrl: githubUrl,
       url: url
@@ -54,8 +69,7 @@ class PharahApp extends Component {
   }
   render(props, state) {
     return (<div id="foo">
-      <button id="pharah"><img id="pharah_icon" src='' /></button>
-
+      <button id="pharah"><img id="pharah_icon" /></button>
       <div id="debug"></div>
     </div>)
   }
@@ -63,55 +77,32 @@ class PharahApp extends Component {
 
 render(<PharahApp githubUrl={githubUrl} url={url} />, document.body)
 
-document.getElementById('pharah').addEventListener('click', () => {
+de('pharah').addEventListener('click', () => {
 
   function base64ToArrayBuffer(base64) {
-    var binaryString =  window.atob(base64);
-    var len = binaryString.length;
-    var bytes = new Uint8Array( len );
-    for (var i = 0; i < len; i++)        {
+    var binaryString =  window.atob(base64)
+    var len = binaryString.length
+    var bytes = new Uint8Array(len)
+    // bytes = bytes.map((b) => binaryString.charCodeAt(b))
+    // return bytes.buffer
+    for (var i = 0; i < len; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
     return bytes.buffer;
   }
 
-  var base64 = cache[url];
-  var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  var source = audioContext.createBufferSource();
-  audioContext.decodeAudioData(base64ToArrayBuffer(base64), function(buffer) {
-    source.buffer = buffer;
-    source.connect(audioContext.destination);
-    source.start(0);
-    source.onended = function() {
-      console.log('ended', source)
-      audioContext.close()
-    }
-  });
-  audioContext.onended = function() {
-    console.log('ended', audioContext.state)
-    // audioContext.close()
-
-  }
-
-  // // document.getElementById('debug').innerText = 'clickign';
-  // document.getElementById('yoaudio').src = cache[url];
-  // document.getElementById('yoaudio').load()
-  // document.getElementById('yoaudio').play().then(() => {
-  //   document.getElementById('debug').innerText = 'yoaudio_play';
-  // }).catch((err) => {
-  //   document.getElementById('debug').innerText = JSON.stringify(err);
-  // })
+  // var base64 = cache[url];
+  let url = mp3s[~~(Math.random() * mp3s.length)]
+  cacheAudio(url).then((base64) => {
+    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    var source = audioContext.createBufferSource();
+    audioContext.decodeAudioData(base64ToArrayBuffer(base64), function(buffer) {
+      source.buffer = buffer;
+      source.connect(audioContext.destination);
+      source.start(0);
+      source.onended = function() {
+        audioContext.close()
+      }
+    });
+  })
 })
-
-
-
-// document.getElementById('alt').addEventListener('click', () => {
-//   document.getElementById('yoaudio').src = cache[url];
-//   document.getElementById('yoaudio2').load()
-//   document.getElementById('yoaudio2').play().then(() => {
-//     document.getElementById('debug').innerText = 'yoaudio2play';
-//   }).catch((err) => {
-//     document.getElementById('debug').innerText = JSON.stringify(err);
-//   })
-// })
-

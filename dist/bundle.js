@@ -1189,7 +1189,6 @@ var PharahApp = function (_Component) {
   function PharahApp(props) {
     classCallCheck(this, PharahApp);
 
-    // set initial time:
     var _this = possibleConstructorReturn(this, (PharahApp.__proto__ || Object.getPrototypeOf(PharahApp)).call(this, props));
 
     _this.props = {
@@ -1208,7 +1207,7 @@ var PharahApp = function (_Component) {
         h(
           'button',
           { id: 'pharah' },
-          h('img', { id: 'pharah_icon', src: '' })
+          h('img', { id: 'pharah_icon' })
         ),
         h('div', { id: 'debug' })
       );
@@ -1248,24 +1247,6 @@ document.getElementById('pharah').addEventListener('click', function () {
     // audioContext.close()
   };
 
-  // // document.getElementById('debug').innerText = 'clickign';
-  // document.getElementById('yoaudio').src = cache[url];
-  // document.getElementById('yoaudio').load()
-  // document.getElementById('yoaudio').play().then(() => {
-  //   document.getElementById('debug').innerText = 'yoaudio_play';
-  // }).catch((err) => {
-  //   document.getElementById('debug').innerText = JSON.stringify(err);
-  // })
 });
-
-// document.getElementById('alt').addEventListener('click', () => {
-//   document.getElementById('yoaudio').src = cache[url];
-//   document.getElementById('yoaudio2').load()
-//   document.getElementById('yoaudio2').play().then(() => {
-//     document.getElementById('debug').innerText = 'yoaudio2play';
-//   }).catch((err) => {
-//     document.getElementById('debug').innerText = JSON.stringify(err);
-//   })
-// })
 
 }());
