@@ -1145,11 +1145,8 @@ var possibleConstructorReturn = function (self, call) {
 
 var cache = {};
 var imgCache = {};
-var githubUrl = window.location.href;
-
-if (githubUrl.endsWith("/index.html")) {
-  githubUrl = githubUrl.slice(0, -10);
-}
+var g = window.location.href;
+var githubUrl = g.endsWith('/index.html') ? g.slice(0, -10) : g;
 
 var url = 'Pharah_-_Impressed.mp3';
 
